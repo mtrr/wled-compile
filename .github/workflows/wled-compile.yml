@@ -46,7 +46,7 @@ jobs:
         git add $GITHUB_WORKSPACE/last_update_date.txt || true
         git commit -m "Commit Custom Build" || true
         git push origin main || true
-    - name: Run PlatformIO mdev esp32_4MB_S
+    - name: Run PlatformIO mdev esp32_4MB_M
       run: |
         rm -rf /tmp/WLEDtemp/* || true
         mkdir -p /tmp/WLEDtemp
@@ -55,25 +55,25 @@ jobs:
         find /tmp/WLEDtemp -maxdepth 1 -name "WLED-*" -type d >> /tmp/WLEDtemp/wledfoldername
         cd `cat /tmp/WLEDtemp/wledfoldername`
         echo '[env:custom_build]' >>platformio.ini
-        echo 'extends = env:esp32_4MB_S' >>platformio.ini
+        echo 'extends = env:esp32_4MB_M' >>platformio.ini
         
         pio run -e custom_build || pio run -e custom_build || true
-    - name: Copy Files mdev esp32_4MB_S
+    - name: Copy Files mdev esp32_4MB_M
       run: |
         cd $GITHUB_WORKSPACE
         WLEDFOLDERNAME=`cat /tmp/WLEDtemp/wledfoldername`
-        cp ${WLEDFOLDERNAME}/build_output/firmware/custom_build.bin $GITHUB_WORKSPACE/build_mdev_esp32_4MB_S.bin || true
+        cp ${WLEDFOLDERNAME}/build_output/firmware/custom_build.bin $GITHUB_WORKSPACE/build_mdev_esp32_4MB_M.bin || true
         date -I | tr -d '\n' >$GITHUB_WORKSPACE/last_update_date.txt
-    - name: Commit Files mdev esp32_4MB_S
+    - name: Commit Files mdev esp32_4MB_M
       run: |
         cd $GITHUB_WORKSPACE
         git config user.name "GitHub Actions Bot"
         git config user.email "<>"
-        git add $GITHUB_WORKSPACE/build_mdev_esp32_4MB_S.bin || true
+        git add $GITHUB_WORKSPACE/build_mdev_esp32_4MB_M.bin || true
         git add $GITHUB_WORKSPACE/last_update_date.txt || true
         git commit -m "Commit Custom Build" || true
         git push origin main || true
-    - name: Run PlatformIO mdev esp8266_4MB_S
+    - name: Run PlatformIO mdev esp8266_4MB_M
       run: |
         rm -rf /tmp/WLEDtemp/* || true
         mkdir -p /tmp/WLEDtemp
@@ -82,21 +82,75 @@ jobs:
         find /tmp/WLEDtemp -maxdepth 1 -name "WLED-*" -type d >> /tmp/WLEDtemp/wledfoldername
         cd `cat /tmp/WLEDtemp/wledfoldername`
         echo '[env:custom_build]' >>platformio.ini
-        echo 'extends = env:esp8266_4MB_S' >>platformio.ini
+        echo 'extends = env:esp8266_4MB_M' >>platformio.ini
         
         pio run -e custom_build || pio run -e custom_build || true
-    - name: Copy Files mdev esp8266_4MB_S
+    - name: Copy Files mdev esp8266_4MB_M
       run: |
         cd $GITHUB_WORKSPACE
         WLEDFOLDERNAME=`cat /tmp/WLEDtemp/wledfoldername`
-        cp ${WLEDFOLDERNAME}/build_output/firmware/custom_build.bin $GITHUB_WORKSPACE/build_mdev_esp8266_4MB_S.bin || true
+        cp ${WLEDFOLDERNAME}/build_output/firmware/custom_build.bin $GITHUB_WORKSPACE/build_mdev_esp8266_4MB_M.bin || true
         date -I | tr -d '\n' >$GITHUB_WORKSPACE/last_update_date.txt
-    - name: Commit Files mdev esp8266_4MB_S
+    - name: Commit Files mdev esp8266_4MB_M
       run: |
         cd $GITHUB_WORKSPACE
         git config user.name "GitHub Actions Bot"
         git config user.email "<>"
-        git add $GITHUB_WORKSPACE/build_mdev_esp8266_4MB_S.bin || true
+        git add $GITHUB_WORKSPACE/build_mdev_esp8266_4MB_M.bin || true
+        git add $GITHUB_WORKSPACE/last_update_date.txt || true
+        git commit -m "Commit Custom Build" || true
+        git push origin main || true
+    - name: Run PlatformIO mdev esp32_4MB_V4_M
+      run: |
+        rm -rf /tmp/WLEDtemp/* || true
+        mkdir -p /tmp/WLEDtemp
+        wget https://github.com/moonmodules/WLED/archive/refs/heads/mdev.zip -O /tmp/WLEDtemp/mm.zip
+        unzip -o /tmp/WLEDtemp/mm.zip -d /tmp/WLEDtemp
+        find /tmp/WLEDtemp -maxdepth 1 -name "WLED-*" -type d >> /tmp/WLEDtemp/wledfoldername
+        cd `cat /tmp/WLEDtemp/wledfoldername`
+        echo '[env:custom_build]' >>platformio.ini
+        echo 'extends = env:esp32_4MB_V4_M' >>platformio.ini
+        
+        pio run -e custom_build || pio run -e custom_build || true
+    - name: Copy Files mdev esp32_4MB_V4_M
+      run: |
+        cd $GITHUB_WORKSPACE
+        WLEDFOLDERNAME=`cat /tmp/WLEDtemp/wledfoldername`
+        cp ${WLEDFOLDERNAME}/build_output/firmware/custom_build.bin $GITHUB_WORKSPACE/build_mdev_esp32_4MB_V4_M.bin || true
+        date -I | tr -d '\n' >$GITHUB_WORKSPACE/last_update_date.txt
+    - name: Commit Files mdev esp32_4MB_V4_M
+      run: |
+        cd $GITHUB_WORKSPACE
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
+        git add $GITHUB_WORKSPACE/build_mdev_esp32_4MB_V4_M.bin || true
+        git add $GITHUB_WORKSPACE/last_update_date.txt || true
+        git commit -m "Commit Custom Build" || true
+        git push origin main || true
+    - name: Run PlatformIO mdev esp32c3dev_4MB_M
+      run: |
+        rm -rf /tmp/WLEDtemp/* || true
+        mkdir -p /tmp/WLEDtemp
+        wget https://github.com/moonmodules/WLED/archive/refs/heads/mdev.zip -O /tmp/WLEDtemp/mm.zip
+        unzip -o /tmp/WLEDtemp/mm.zip -d /tmp/WLEDtemp
+        find /tmp/WLEDtemp -maxdepth 1 -name "WLED-*" -type d >> /tmp/WLEDtemp/wledfoldername
+        cd `cat /tmp/WLEDtemp/wledfoldername`
+        echo '[env:custom_build]' >>platformio.ini
+        echo 'extends = env:esp32c3dev_4MB_M' >>platformio.ini
+        
+        pio run -e custom_build || pio run -e custom_build || true
+    - name: Copy Files mdev esp32c3dev_4MB_M
+      run: |
+        cd $GITHUB_WORKSPACE
+        WLEDFOLDERNAME=`cat /tmp/WLEDtemp/wledfoldername`
+        cp ${WLEDFOLDERNAME}/build_output/firmware/custom_build.bin $GITHUB_WORKSPACE/build_mdev_esp32c3dev_4MB_M.bin || true
+        date -I | tr -d '\n' >$GITHUB_WORKSPACE/last_update_date.txt
+    - name: Commit Files mdev esp32c3dev_4MB_M
+      run: |
+        cd $GITHUB_WORKSPACE
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
+        git add $GITHUB_WORKSPACE/build_mdev_esp32c3dev_4MB_M.bin || true
         git add $GITHUB_WORKSPACE/last_update_date.txt || true
         git commit -m "Commit Custom Build" || true
         git push origin main || true
