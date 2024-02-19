@@ -31,6 +31,7 @@ jobs:
         npm install
         echo '[env:custom_build]' >>platformio.ini
         echo 'extends = env:esp32dev' >>platformio.ini
+        echo 'build_flags = ${env:esp32dev.build_flags} -D WLED_AP_SSID_UNIQUE -D CLIENT_SSID='\''"degi_iot"'\'' -D CLIENT_PASS='\''"L1BEPl6PckAEstS7"'\''' >>platformio.ini
         
         pio run -e custom_build || pio run -e custom_build || true
     - name: Copy Files mdev esp32dev
@@ -59,6 +60,7 @@ jobs:
         npm install
         echo '[env:custom_build]' >>platformio.ini
         echo 'extends = env:esp32_eth' >>platformio.ini
+        echo 'build_flags = ${env:esp32_eth.build_flags} -D WLED_AP_SSID_UNIQUE -D CLIENT_SSID='\''"degi_iot"'\'' -D CLIENT_PASS='\''"L1BEPl6PckAEstS7"'\''' >>platformio.ini
         
         pio run -e custom_build || pio run -e custom_build || true
     - name: Copy Files mdev esp32_eth
@@ -87,6 +89,7 @@ jobs:
         npm install
         echo '[env:custom_build]' >>platformio.ini
         echo 'extends = env:esp32c3dev' >>platformio.ini
+        echo 'build_flags = ${env:esp32c3dev.build_flags} -D WLED_AP_SSID_UNIQUE -D CLIENT_SSID='\''"degi_iot"'\'' -D CLIENT_PASS='\''"L1BEPl6PckAEstS7"'\''' >>platformio.ini
         
         pio run -e custom_build || pio run -e custom_build || true
     - name: Copy Files mdev esp32c3dev
@@ -115,6 +118,7 @@ jobs:
         npm install
         echo '[env:custom_build]' >>platformio.ini
         echo 'extends = env:esp32_4MB_S' >>platformio.ini
+        echo 'build_flags = ${env:esp32_4MB_S.build_flags} -D WLED_AP_SSID_UNIQUE -D CLIENT_SSID='\''"degi_iot"'\'' -D CLIENT_PASS='\''"L1BEPl6PckAEstS7"'\''' >>platformio.ini
         
         pio run -e custom_build || pio run -e custom_build || true
     - name: Copy Files mdev esp32_4MB_S
@@ -132,6 +136,35 @@ jobs:
         git add $GITHUB_WORKSPACE/last_update_date.txt || true
         git commit -m "Commit Custom Build" || true
         git push origin main || true
+    - name: Run PlatformIO mdev esp32_4MB_M
+      run: |
+        rm -rf /tmp/WLEDtemp/* || true
+        mkdir -p /tmp/WLEDtemp
+        wget https://github.com/moonmodules/WLED/archive/refs/heads/mdev.zip -O /tmp/WLEDtemp/mm.zip
+        unzip -o /tmp/WLEDtemp/mm.zip -d /tmp/WLEDtemp
+        find /tmp/WLEDtemp -maxdepth 1 -name "WLED-*" -type d >> /tmp/WLEDtemp/wledfoldername
+        cd `cat /tmp/WLEDtemp/wledfoldername`
+        npm install
+        echo '[env:custom_build]' >>platformio.ini
+        echo 'extends = env:esp32_4MB_M' >>platformio.ini
+        echo 'build_flags = ${env:esp32_4MB_M.build_flags} -D WLED_AP_SSID_UNIQUE -D CLIENT_SSID='\''"degi_iot"'\'' -D CLIENT_PASS='\''"L1BEPl6PckAEstS7"'\''' >>platformio.ini
+        
+        pio run -e custom_build || pio run -e custom_build || true
+    - name: Copy Files mdev esp32_4MB_M
+      run: |
+        cd $GITHUB_WORKSPACE
+        WLEDFOLDERNAME=`cat /tmp/WLEDtemp/wledfoldername`
+        cp ${WLEDFOLDERNAME}/build_output/firmware/custom_build.bin $GITHUB_WORKSPACE/build_mdev_esp32_4MB_M.bin || true
+        date -I | tr -d '\n' >$GITHUB_WORKSPACE/last_update_date.txt
+    - name: Commit Files mdev esp32_4MB_M
+      run: |
+        cd $GITHUB_WORKSPACE
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
+        git add $GITHUB_WORKSPACE/build_mdev_esp32_4MB_M.bin || true
+        git add $GITHUB_WORKSPACE/last_update_date.txt || true
+        git commit -m "Commit Custom Build" || true
+        git push origin main || true
     - name: Run PlatformIO mdev esp32_4MB_M_eth
       run: |
         rm -rf /tmp/WLEDtemp/* || true
@@ -143,6 +176,7 @@ jobs:
         npm install
         echo '[env:custom_build]' >>platformio.ini
         echo 'extends = env:esp32_4MB_M_eth' >>platformio.ini
+        echo 'build_flags = ${env:esp32_4MB_M_eth.build_flags} -D WLED_AP_SSID_UNIQUE -D CLIENT_SSID='\''"degi_iot"'\'' -D CLIENT_PASS='\''"L1BEPl6PckAEstS7"'\''' >>platformio.ini
         
         pio run -e custom_build || pio run -e custom_build || true
     - name: Copy Files mdev esp32_4MB_M_eth
@@ -160,6 +194,35 @@ jobs:
         git add $GITHUB_WORKSPACE/last_update_date.txt || true
         git commit -m "Commit Custom Build" || true
         git push origin main || true
+    - name: Run PlatformIO mdev esp8266_4MB_S
+      run: |
+        rm -rf /tmp/WLEDtemp/* || true
+        mkdir -p /tmp/WLEDtemp
+        wget https://github.com/moonmodules/WLED/archive/refs/heads/mdev.zip -O /tmp/WLEDtemp/mm.zip
+        unzip -o /tmp/WLEDtemp/mm.zip -d /tmp/WLEDtemp
+        find /tmp/WLEDtemp -maxdepth 1 -name "WLED-*" -type d >> /tmp/WLEDtemp/wledfoldername
+        cd `cat /tmp/WLEDtemp/wledfoldername`
+        npm install
+        echo '[env:custom_build]' >>platformio.ini
+        echo 'extends = env:esp8266_4MB_S' >>platformio.ini
+        echo 'build_flags = ${env:esp8266_4MB_S.build_flags} -D WLED_AP_SSID_UNIQUE -D CLIENT_SSID='\''"degi_iot"'\'' -D CLIENT_PASS='\''"L1BEPl6PckAEstS7"'\''' >>platformio.ini
+        
+        pio run -e custom_build || pio run -e custom_build || true
+    - name: Copy Files mdev esp8266_4MB_S
+      run: |
+        cd $GITHUB_WORKSPACE
+        WLEDFOLDERNAME=`cat /tmp/WLEDtemp/wledfoldername`
+        cp ${WLEDFOLDERNAME}/build_output/firmware/custom_build.bin $GITHUB_WORKSPACE/build_mdev_esp8266_4MB_S.bin || true
+        date -I | tr -d '\n' >$GITHUB_WORKSPACE/last_update_date.txt
+    - name: Commit Files mdev esp8266_4MB_S
+      run: |
+        cd $GITHUB_WORKSPACE
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
+        git add $GITHUB_WORKSPACE/build_mdev_esp8266_4MB_S.bin || true
+        git add $GITHUB_WORKSPACE/last_update_date.txt || true
+        git commit -m "Commit Custom Build" || true
+        git push origin main || true
     - name: Run PlatformIO mdev esp8266_4MB_M
       run: |
         rm -rf /tmp/WLEDtemp/* || true
@@ -171,6 +234,7 @@ jobs:
         npm install
         echo '[env:custom_build]' >>platformio.ini
         echo 'extends = env:esp8266_4MB_M' >>platformio.ini
+        echo 'build_flags = ${env:esp8266_4MB_M.build_flags} -D WLED_AP_SSID_UNIQUE -D CLIENT_SSID='\''"degi_iot"'\'' -D CLIENT_PASS='\''"L1BEPl6PckAEstS7"'\''' >>platformio.ini
         
         pio run -e custom_build || pio run -e custom_build || true
     - name: Copy Files mdev esp8266_4MB_M
@@ -185,6 +249,35 @@ jobs:
         git config user.name "GitHub Actions Bot"
         git config user.email "<>"
         git add $GITHUB_WORKSPACE/build_mdev_esp8266_4MB_M.bin || true
+        git add $GITHUB_WORKSPACE/last_update_date.txt || true
+        git commit -m "Commit Custom Build" || true
+        git push origin main || true
+    - name: Run PlatformIO mdev esp32c3dev_4MB_M
+      run: |
+        rm -rf /tmp/WLEDtemp/* || true
+        mkdir -p /tmp/WLEDtemp
+        wget https://github.com/moonmodules/WLED/archive/refs/heads/mdev.zip -O /tmp/WLEDtemp/mm.zip
+        unzip -o /tmp/WLEDtemp/mm.zip -d /tmp/WLEDtemp
+        find /tmp/WLEDtemp -maxdepth 1 -name "WLED-*" -type d >> /tmp/WLEDtemp/wledfoldername
+        cd `cat /tmp/WLEDtemp/wledfoldername`
+        npm install
+        echo '[env:custom_build]' >>platformio.ini
+        echo 'extends = env:esp32c3dev_4MB_M' >>platformio.ini
+        echo 'build_flags = ${env:esp32c3dev_4MB_M.build_flags} -D WLED_AP_SSID_UNIQUE -D CLIENT_SSID='\''"degi_iot"'\'' -D CLIENT_PASS='\''"L1BEPl6PckAEstS7"'\''' >>platformio.ini
+        
+        pio run -e custom_build || pio run -e custom_build || true
+    - name: Copy Files mdev esp32c3dev_4MB_M
+      run: |
+        cd $GITHUB_WORKSPACE
+        WLEDFOLDERNAME=`cat /tmp/WLEDtemp/wledfoldername`
+        cp ${WLEDFOLDERNAME}/build_output/firmware/custom_build.bin $GITHUB_WORKSPACE/build_mdev_esp32c3dev_4MB_M.bin || true
+        date -I | tr -d '\n' >$GITHUB_WORKSPACE/last_update_date.txt
+    - name: Commit Files mdev esp32c3dev_4MB_M
+      run: |
+        cd $GITHUB_WORKSPACE
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
+        git add $GITHUB_WORKSPACE/build_mdev_esp32c3dev_4MB_M.bin || true
         git add $GITHUB_WORKSPACE/last_update_date.txt || true
         git commit -m "Commit Custom Build" || true
         git push origin main || true
